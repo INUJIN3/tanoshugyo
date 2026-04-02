@@ -1,0 +1,2267 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>たのしゅぎょ！</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f7f4ff;
+  --surface: #ffffff;
+  --surface2: #f0ecff;
+  --primary: #7c5cbf;
+  --primary-light: #a07dd4;
+  --primary-pale: #ece6ff;
+  --accent: #ff7eb3;
+  --accent-pale: #ffe4f0;
+  --green: #4caf82;
+  --green-pale: #dff4ec;
+  --amber: #f5a623;
+  --amber-pale: #fff3d6;
+  --red-pale: #ffe4e4;
+  --text: #2d2540;
+  --text2: #6b5f8a;
+  --text3: #a095b8;
+  --border: #e4ddf8;
+  --shadow: 0 4px 24px rgba(124,92,191,0.10);
+  --shadow-sm: 0 2px 10px rgba(124,92,191,0.08);
+  --radius: 20px;
+  --radius-sm: 12px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Noto Sans JP', sans-serif;
+  min-height: 100vh;
+  padding-bottom: 60px;
+}
+body::before {
+  content: '';
+  position: fixed;
+  top: -120px; right: -120px;
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(160,125,212,0.18) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+}
+body::after {
+  content: '';
+  position: fixed;
+  bottom: -80px; left: -80px;
+  width: 320px; height: 320px;
+  background: radial-gradient(circle, rgba(255,126,179,0.13) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+}
+.container {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 20px;
+  position: relative;
+  z-index: 1;
+}
+header {
+  padding: 36px 0 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.logo-icon {
+  width: 46px; height: 46px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.logo-text h1 {
+  font-family: 'Nunito', sans-serif;
+  font-weight: 800;
+  font-size: 1.5rem;
+  color: var(--text);
+}
+.logo-text p {
+  font-size: 0.65rem;
+  color: var(--text3);
+  letter-spacing: 0.04em;
+}
+.day-hero {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 50%, var(--accent) 100%);
+  border-radius: var(--radius);
+  padding: 28px 32px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  box-shadow: 0 8px 32px rgba(124,92,191,0.28);
+  position: relative;
+  overflow: hidden;
+}
+.day-hero::before {
+  content: '';
+  position: absolute;
+  top: -30px; right: -30px;
+  width: 150px; height: 150px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 50%;
+}
+.day-hero::after {
+  content: '';
+  position: absolute;
+  bottom: -40px; right: 60px;
+  width: 100px; height: 100px;
+  background: rgba(255,255,255,0.06);
+  border-radius: 50%;
+}
+.day-num-block { position: relative; z-index: 1; }
+.day-num-block .num {
+  font-family: 'Nunito', sans-serif;
+  font-weight: 800;
+  font-size: clamp(3.5rem, 10vw, 5.5rem);
+  color: white;
+  line-height: 1;
+}
+.day-num-block .label {
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.75);
+  letter-spacing: 0.08em;
+  font-weight: 500;
+}
+.day-right {
+  position: relative;
+  z-index: 1;
+  text-align: right;
+}
+.stage-badge {
+  display: inline-block;
+  background: rgba(255,255,255,0.22);
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(255,255,255,0.3);
+  color: white;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  margin-bottom: 10px;
+}
+.day-date {
+  color: rgba(255,255,255,0.7);
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+}
+.progress-card {
+  background: var(--surface);
+  border-radius: var(--radius);
+  padding: 20px 24px;
+  margin-bottom: 16px;
+  box-shadow: var(--shadow-sm);
+}
+.progress-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+.progress-top .ptitle { font-weight: 700; font-size: 0.88rem; color: var(--text2); }
+.progress-top .ppct {
+  font-family: 'Nunito', sans-serif;
+  font-weight: 800;
+  font-size: 1rem;
+  color: var(--primary);
+}
+.progress-bar-bg {
+  height: 10px;
+  background: var(--primary-pale);
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 14px;
+}
+.progress-bar-fg {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary), var(--accent));
+  border-radius: 10px;
+  transition: width 0.8s cubic-bezier(.4,0,.2,1);
+}
+.stages-dots {
+  display: flex;
+  gap: 6px;
+}
+.sdot {
+  flex: 1;
+  height: 6px;
+  background: var(--primary-pale);
+  border-radius: 3px;
+  position: relative;
+  cursor: default;
+  transition: background 0.3s;
+}
+.sdot.done { background: var(--primary-light); }
+.sdot.active { background: linear-gradient(90deg, var(--primary), var(--accent)); box-shadow: 0 0 8px rgba(124,92,191,0.4); }
+.sdot .sdot-label {
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.58rem;
+  color: var(--text3);
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  background: white;
+  padding: 2px 6px;
+  border-radius: 8px;
+  box-shadow: var(--shadow-sm);
+  transition: opacity 0.2s;
+}
+.sdot:hover .sdot-label { opacity: 1; }
+.card {
+  background: var(--surface);
+  border-radius: var(--radius);
+  padding: 24px;
+  margin-bottom: 16px;
+  box-shadow: var(--shadow-sm);
+}
+.card-title {
+  font-weight: 700;
+  font-size: 0.92rem;
+  color: var(--text);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.card-title .icon {
+  width: 28px; height: 28px;
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.9rem;
+}
+.icon-purple { background: var(--primary-pale); }
+.icon-pink   { background: var(--accent-pale); }
+.icon-amber  { background: var(--amber-pale); }
+.question-text {
+  font-size: 1.0rem;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.8;
+  background: var(--primary-pale);
+  border-radius: var(--radius-sm);
+  padding: 16px 18px;
+  border-left: 4px solid var(--primary);
+}
+.field-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text2);
+  letter-spacing: 0.06em;
+  margin-bottom: 8px;
+  display: block;
+}
+.tegotae-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+.tegotae-btn {
+  flex: 1;
+  padding: 14px 8px;
+  border-radius: var(--radius-sm);
+  border: 2px solid var(--border);
+  background: var(--surface);
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: center;
+  font-family: 'Noto Sans JP', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text3);
+}
+.tegotae-btn .big-mark {
+  font-family: 'Nunito', sans-serif;
+  font-size: 1.7rem;
+  font-weight: 800;
+  display: block;
+  margin-bottom: 3px;
+  line-height: 1;
+}
+.tegotae-btn:hover { transform: translateY(-2px); box-shadow: var(--shadow-sm); }
+.tegotae-btn.sel-maru    { background: var(--green-pale);  border-color: var(--green);  color: var(--green); }
+.tegotae-btn.sel-sankaku { background: var(--amber-pale);  border-color: var(--amber);  color: var(--amber); }
+.tegotae-btn.sel-batsu   { background: var(--red-pale);    border-color: #e57373;        color: #e57373; }
+input[type="text"], textarea {
+  font-family: 'Noto Sans JP', sans-serif;
+  font-size: 0.9rem;
+  color: var(--text);
+  background: var(--surface2);
+  border: 2px solid transparent;
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  width: 100%;
+  line-height: 1.7;
+  transition: all 0.2s;
+  resize: vertical;
+}
+input[type="text"]:focus, textarea:focus {
+  outline: none;
+  background: white;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 4px rgba(124,92,191,0.1);
+}
+.main-textarea { min-height: 140px; margin-bottom: 16px; }
+.mood-slider-wrap { margin-bottom: 18px; }
+.mood-slider-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.68rem;
+  color: var(--text3);
+  margin-bottom: 6px;
+  font-weight: 600;
+}
+.mood-slider-track {
+  position: relative;
+  padding: 4px 0 10px;
+}
+.mood-slider-track input[type=range] {
+  width: 100%;
+  -webkit-appearance: none;
+  appearance: none;
+  height: 6px;
+  border-radius: 3px;
+  background: linear-gradient(90deg, #ff7eb3 0%, #a07dd4 50%, #7c5cbf 100%);
+  outline: none;
+  cursor: pointer;
+  border: none;
+  padding: 0;
+}
+.mood-slider-track input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  background: white;
+  border: 3px solid var(--primary);
+  box-shadow: 0 2px 8px rgba(124,92,191,0.3);
+  cursor: pointer;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.mood-slider-track input[type=range]::-webkit-slider-thumb:hover {
+  box-shadow: 0 2px 14px rgba(124,92,191,0.45);
+}
+.mood-val-display {
+  text-align: center;
+  margin-top: 8px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--primary);
+  letter-spacing: 0.04em;
+  min-height: 1.2em;
+}
+.save-btn {
+  width: 100%;
+  padding: 16px;
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  color: white;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-family: 'Noto Sans JP', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  transition: all 0.25s;
+  box-shadow: 0 4px 16px rgba(124,92,191,0.3);
+}
+.save-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(124,92,191,0.4); }
+.save-btn:active { transform: translateY(0); }
+.ai-card {
+  background: linear-gradient(135deg, #2d2540 0%, #1e1830 100%);
+  border-radius: var(--radius);
+  padding: 24px;
+  margin-bottom: 16px;
+  position: relative;
+  overflow: hidden;
+}
+.ai-card::before {
+  content: '✦';
+  position: absolute;
+  right: 20px; top: 16px;
+  font-size: 4rem;
+  color: rgba(255,255,255,0.05);
+  line-height: 1;
+}
+.ai-card .card-title { color: white; }
+.ai-card p { font-size: 0.78rem; color: rgba(255,255,255,0.5); line-height: 1.8; margin-bottom: 16px; }
+.ai-btn {
+  background: transparent;
+  border: 2px solid var(--accent);
+  color: var(--accent);
+  padding: 10px 22px;
+  font-family: 'Noto Sans JP', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  border-radius: 20px;
+}
+.ai-btn:hover { background: var(--accent); color: white; }
+.ai-btn:disabled { opacity: 0.5; cursor: default; }
+.ai-loading { color: rgba(255,255,255,0.4); font-size: 0.78rem; margin-top: 12px; display: none; letter-spacing: 0.1em; }
+.ai-response {
+  margin-top: 16px;
+  padding: 16px;
+  background: rgba(255,255,255,0.06);
+  border-left: 3px solid var(--accent);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  font-size: 0.88rem;
+  color: rgba(255,255,255,0.85);
+  line-height: 1.9;
+  display: none;
+  white-space: pre-wrap;
+}
+.entries-list { display: flex; flex-direction: column; gap: 12px; }
+.entry-card {
+  background: var(--surface2);
+  border-radius: var(--radius-sm);
+  padding: 16px 18px;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: 2px solid transparent;
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+}
+.entry-card:hover { border-color: var(--primary-light); background: white; transform: translateY(-1px); box-shadow: var(--shadow-sm); }
+.entry-day-badge {
+  min-width: 44px; height: 44px;
+  background: white;
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 800;
+  font-size: 1.05rem;
+  color: var(--primary);
+  flex-shrink: 0;
+  box-shadow: var(--shadow-sm);
+}
+.entry-content { flex: 1; min-width: 0; }
+.entry-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 5px;
+  flex-wrap: wrap;
+}
+.entry-date { font-size: 0.72rem; color: var(--text3); }
+.entry-marks { display: flex; gap: 6px; align-items: center; }
+.tegotae-tag { font-size: 0.78rem; font-weight: 700; padding: 1px 8px; border-radius: 10px; }
+.tag-maru    { background: var(--green-pale);  color: var(--green); }
+.tag-sankaku { background: var(--amber-pale);  color: var(--amber); }
+.tag-batsu   { background: var(--red-pale);    color: #e57373; }
+.mood-chip { font-size: 0.68rem; padding: 2px 8px; border-radius: 10px; background: var(--primary-pale); color: var(--primary); font-weight: 600; }
+.entry-text { font-size: 0.84rem; color: var(--text2); line-height: 1.7; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.empty-state {
+  text-align: center;
+  padding: 48px 20px;
+  color: var(--text3);
+  font-size: 0.85rem;
+  line-height: 2;
+  background: var(--surface);
+  border-radius: var(--radius);
+  border: 2px dashed var(--border);
+}
+.empty-state .emoji { font-size: 2.5rem; display: block; margin-bottom: 10px; }
+.modal-overlay {
+  position: fixed; inset: 0;
+  background: rgba(45,37,64,0.6);
+  z-index: 100;
+  display: none; align-items: center; justify-content: center;
+  padding: 20px;
+  backdrop-filter: blur(4px);
+}
+.modal-overlay.open { display: flex; }
+.modal {
+  background: var(--surface);
+  max-width: 580px; width: 100%;
+  max-height: 82vh; overflow-y: auto;
+  border-radius: var(--radius);
+  box-shadow: 0 24px 64px rgba(45,37,64,0.35);
+  animation: slideUp 0.25s ease;
+}
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.modal-header {
+  padding: 18px 22px 14px;
+  border-bottom: 1px solid var(--border);
+  display: flex; justify-content: space-between; align-items: center;
+}
+.modal-header .title { font-weight: 700; font-size: 1rem; color: var(--text); }
+.modal-close {
+  background: var(--surface2); border: none;
+  width: 30px; height: 30px;
+  border-radius: 50%;
+  font-size: 1rem; color: var(--text3); cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.2s;
+}
+.modal-close:hover { background: var(--border); }
+.modal-body { padding: 18px 22px; }
+.modal-meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+.meta-chip { font-size: 0.72rem; padding: 3px 10px; border-radius: 10px; background: var(--surface2); color: var(--text2); font-weight: 600; }
+.modal-full-text { font-size: 0.9rem; line-height: 1.9; color: var(--text); white-space: pre-wrap; }
+/* 編集モード */
+.modal-edit-area {
+  display: none;
+  flex-direction: column;
+  gap: 10px;
+}
+.modal-edit-area textarea {
+  min-height: 120px;
+  font-size: 0.88rem;
+}
+.modal-edit-area input[type="text"] {
+  font-size: 0.88rem;
+}
+.modal-action-row {
+  display: flex;
+  gap: 8px;
+  margin-top: 14px;
+  flex-wrap: wrap;
+}
+.btn-edit {
+  padding: 8px 16px;
+  border-radius: 10px;
+  border: 1.5px solid var(--border);
+  background: transparent;
+  color: var(--text2);
+  font-size: 0.78rem;
+  font-weight: 600;
+  font-family: 'Noto Sans JP', sans-serif;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.btn-edit:hover { border-color: var(--primary); color: var(--primary); }
+.btn-save-edit {
+  padding: 8px 20px;
+  border-radius: 10px;
+  border: none;
+  background: var(--primary);
+  color: white;
+  font-size: 0.78rem;
+  font-weight: 700;
+  font-family: 'Noto Sans JP', sans-serif;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.btn-save-edit:hover { background: var(--primary-light); }
+.btn-delete {
+  padding: 8px 16px;
+  border-radius: 10px;
+  border: 1.5px solid var(--red-pale);
+  background: transparent;
+  color: #e57373;
+  font-size: 0.78rem;
+  font-weight: 600;
+  font-family: 'Noto Sans JP', sans-serif;
+  cursor: pointer;
+  margin-left: auto;
+  transition: all 0.2s;
+}
+.btn-delete:hover { background: var(--red-pale); }
+.toast {
+  position: fixed;
+  bottom: 24px; left: 50%;
+  transform: translateX(-50%) translateY(10px);
+  background: var(--text);
+  color: white;
+  padding: 12px 22px;
+  border-radius: 24px;
+  font-size: 0.82rem; font-weight: 600;
+  z-index: 200; opacity: 0;
+  transition: all 0.3s;
+  box-shadow: 0 4px 20px rgba(45,37,64,0.3);
+  white-space: nowrap;
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+footer { text-align: center; padding: 32px 0 0; font-size: 0.7rem; color: var(--text3); letter-spacing: 0.1em; }
+
+/* ── 振り返りカード ── */
+.reflect-card {
+  border-radius: var(--radius);
+  padding: 24px;
+  margin-bottom: 16px;
+  box-shadow: var(--shadow-sm);
+  background: linear-gradient(160deg, #1e1830 0%, #2a1f45 100%);
+  position: relative;
+  overflow: hidden;
+}
+.reflect-card::after {
+  content: '変';
+  position: absolute;
+  right: 16px; bottom: -10px;
+  font-size: 7rem;
+  font-weight: 700;
+  color: rgba(255,255,255,0.03);
+  line-height: 1;
+  pointer-events: none;
+}
+.reflect-tabs {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 20px;
+  background: rgba(255,255,255,0.06);
+  border-radius: 12px;
+  padding: 4px;
+}
+.reflect-tab {
+  flex: 1;
+  padding: 8px;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: rgba(255,255,255,0.45);
+  font-family: 'Noto Sans JP', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  letter-spacing: 0.04em;
+}
+.reflect-tab.active {
+  background: rgba(255,255,255,0.14);
+  color: white;
+}
+.reflect-panel { display: none; }
+.reflect-panel.active { display: block; }
+
+/* AI振り返りパネル */
+.reflect-ai-desc {
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.45);
+  line-height: 1.8;
+  margin-bottom: 16px;
+}
+.reflect-period-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+.reflect-period-btn {
+  padding: 6px 14px;
+  border-radius: 16px;
+  border: 1.5px solid rgba(255,255,255,0.18);
+  background: transparent;
+  color: rgba(255,255,255,0.5);
+  font-family: 'Noto Sans JP', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.reflect-period-btn.active {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: rgba(255,126,179,0.1);
+}
+.reflect-run-btn {
+  background: transparent;
+  border: 2px solid var(--accent);
+  color: var(--accent);
+  padding: 11px 24px;
+  font-family: 'Noto Sans JP', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  border-radius: 20px;
+  letter-spacing: 0.05em;
+}
+.reflect-run-btn:hover { background: var(--accent); color: white; }
+.reflect-run-btn:disabled { opacity: 0.4; cursor: default; }
+.reflect-loading {
+  color: rgba(255,255,255,0.35);
+  font-size: 0.75rem;
+  margin-top: 12px;
+  display: none;
+  letter-spacing: 0.15em;
+  font-style: italic;
+}
+.reflect-response {
+  margin-top: 16px;
+  padding: 18px;
+  background: rgba(255,255,255,0.06);
+  border-left: 3px solid var(--accent);
+  border-radius: 0 12px 12px 0;
+  font-size: 0.88rem;
+  color: rgba(255,255,255,0.85);
+  line-height: 2;
+  display: none;
+  white-space: pre-wrap;
+}
+.reflect-followup-row {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+  flex-wrap: wrap;
+  display: none;
+}
+.reflect-followup-btn {
+  padding: 6px 12px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,126,179,0.4);
+  background: transparent;
+  color: rgba(255,126,179,0.8);
+  font-size: 0.72rem;
+  font-family: 'Noto Sans JP', sans-serif;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.reflect-followup-btn:hover { background: rgba(255,126,179,0.15); color: var(--accent); }
+
+/* キーワードパネル */
+.kw-period-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 14px;
+}
+.kw-period-block {
+  background: rgba(255,255,255,0.05);
+  border-radius: 12px;
+  padding: 14px;
+}
+.kw-period-label {
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: rgba(255,255,255,0.4);
+  letter-spacing: 0.1em;
+  margin-bottom: 10px;
+}
+.kw-list { display: flex; flex-direction: column; gap: 6px; }
+.kw-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.kw-bar-bg {
+  flex: 1;
+  height: 5px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.kw-bar-fg {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.6s cubic-bezier(.4,0,.2,1);
+}
+.kw-word {
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.75);
+  min-width: 60px;
+  font-weight: 500;
+}
+.kw-count {
+  font-size: 0.65rem;
+  color: rgba(255,255,255,0.3);
+  min-width: 20px;
+  text-align: right;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
+}
+.kw-empty {
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.3);
+  text-align: center;
+  padding: 20px 0;
+  line-height: 2;
+}
+
+/* ── グラフカード ── */
+.graph-card {
+  background: var(--surface);
+  border-radius: var(--radius);
+  padding: 24px;
+  margin-bottom: 16px;
+  box-shadow: var(--shadow-sm);
+}
+.graph-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.graph-tabs { display: flex; gap: 4px; }
+.graph-tab {
+  font-size: 0.72rem;
+  padding: 5px 12px;
+  border-radius: 20px;
+  border: 1.5px solid var(--border);
+  background: transparent;
+  color: var(--text3);
+  cursor: pointer;
+  font-family: 'Noto Sans JP', sans-serif;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+.graph-tab.active { background: var(--primary); border-color: var(--primary); color: white; }
+.graph-legend { display: flex; gap: 14px; margin-bottom: 12px; flex-wrap: wrap; }
+.graph-leg { display: flex; align-items: center; gap: 5px; font-size: 0.72rem; color: var(--text3); }
+.graph-leg-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+.graph-stat-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 16px; }
+.graph-stat { background: var(--surface2); border-radius: var(--radius-sm); padding: 10px 12px; }
+.graph-stat-label { font-size: 0.68rem; color: var(--text3); margin-bottom: 3px; }
+.graph-stat-val { font-size: 1.3rem; font-weight: 700; color: var(--text); font-family: 'Nunito', sans-serif; }
+.graph-stat-sub { font-size: 0.65rem; color: var(--text3); margin-top: 2px; }
+.graph-empty { text-align: center; padding: 40px 0; font-size: 0.82rem; color: var(--text3); line-height: 2; }
+.graph-empty .emoji { font-size: 2rem; display: block; margin-bottom: 8px; }
+
+/* ── カレンダー ── */
+.cal-nav {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 14px;
+}
+.cal-nav-title {
+  font-weight: 700; font-size: 0.95rem; color: var(--text);
+}
+.cal-nav-btn {
+  width: 28px; height: 28px; border-radius: 50%;
+  border: 1.5px solid var(--border);
+  background: transparent; color: var(--text2);
+  font-size: 0.9rem; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s;
+}
+.cal-nav-btn:hover { background: var(--primary-pale); border-color: var(--primary); color: var(--primary); }
+.cal-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+}
+.cal-dow {
+  text-align: center; font-size: 0.62rem; font-weight: 700;
+  color: var(--text3); padding: 4px 0; letter-spacing: 0.04em;
+}
+.cal-cell {
+  aspect-ratio: 1;
+  border-radius: 10px;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  font-size: 0.75rem; font-weight: 600;
+  cursor: default;
+  position: relative;
+  transition: all 0.15s;
+  gap: 2px;
+}
+.cal-cell.empty { background: transparent; }
+.cal-cell.today {
+  background: var(--primary-pale);
+  color: var(--primary);
+  font-weight: 800;
+  border: 1.5px solid var(--primary);
+}
+.cal-cell.has-entry {
+  cursor: pointer;
+  background: var(--surface2);
+  color: var(--text);
+}
+.cal-cell.has-entry:hover {
+  background: var(--primary-pale);
+  transform: scale(1.06);
+  box-shadow: var(--shadow-sm);
+}
+.cal-cell.no-entry {
+  color: var(--text3);
+  background: transparent;
+}
+.cal-cell.selected {
+  background: var(--primary-pale) !important;
+  border: 1.5px solid var(--primary) !important;
+  transform: scale(1.06);
+}
+.cal-dot {
+  width: 5px; height: 5px; border-radius: 50%;
+  flex-shrink: 0;
+}
+.cal-dot-maru    { background: var(--green); }
+.cal-dot-sankaku { background: var(--amber); }
+.cal-dot-batsu   { background: #e57373; }
+.cal-dot-none    { background: var(--border); }
+.cal-summary {
+  margin-top: 14px; padding: 14px 16px;
+  background: var(--primary-pale);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 0.82rem; color: var(--text2); line-height: 1.7;
+  display: none;
+  animation: fadeIn 0.15s ease;
+}
+.cal-summary-header {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 8px;
+}
+.cal-summary-title {
+  font-weight: 700; font-size: 0.85rem; color: var(--text);
+}
+.cal-summary-open {
+  font-size: 0.72rem; font-weight: 700;
+  padding: 4px 12px; border-radius: 10px;
+  border: none; background: var(--primary); color: white;
+  cursor: pointer; font-family: 'Noto Sans JP', sans-serif;
+  transition: all 0.2s;
+}
+.cal-summary-open:hover { background: var(--primary-light); }
+.cal-summary-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; }
+.cal-summary-chip {
+  font-size: 0.68rem; padding: 2px 8px; border-radius: 8px;
+  background: white; color: var(--text2); font-weight: 600;
+}
+.cal-summary-text {
+  font-size: 0.8rem; color: var(--text2); line-height: 1.7;
+}
+@keyframes fadeIn { from { opacity:0; transform:translateY(4px); } to { opacity:1; transform:translateY(0); } }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <div class="logo-icon">
+      <svg width="46" height="46" viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M23 6 C28 6, 40 12, 40 23 C40 33, 30 41, 20 39 C11 37, 6 28, 8 19 C10 11, 17 6, 23 6" stroke="url(#ensoGrad)" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+        <defs>
+          <linearGradient id="ensoGrad" x1="6" y1="6" x2="40" y2="40" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#7c5cbf"/>
+            <stop offset="100%" stop-color="#ff7eb3"/>
+          </linearGradient>
+        </defs>
+      </svg>
+    </div>
+    <div class="logo-text">
+      <h1>たのしゅぎょ！</h1>
+      <p>みんなで問いながら進む たのしい修行</p>
+    </div>
+  </header>
+
+  <div class="day-hero">
+    <div class="day-num-block">
+      <div class="num" id="currentDay">1</div>
+      <div class="label">日目 / 100日</div>
+    </div>
+    <div class="day-right">
+      <div class="stage-badge" id="stageBadge">第1段階：探索</div>
+      <div class="day-date" id="todayDate"></div>
+    </div>
+  </div>
+
+  <div class="progress-card">
+    <div class="progress-top">
+      <span class="ptitle">100日間の歩み</span>
+      <span class="ppct" id="progressPct">1%</span>
+    </div>
+    <div class="progress-bar-bg">
+      <div class="progress-bar-fg" id="progressBar" style="width:1%"></div>
+    </div>
+    <div class="stages-dots" id="stagesDots"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title" style="justify-content:space-between;">
+      <div style="display:flex;align-items:center;gap:8px;">
+        <div class="icon icon-purple">💭</div>
+        今日の問い
+      </div>
+      <button id="stagePreviewBtn" onclick="toggleStagePreview()" style="font-size:0.65rem;padding:4px 10px;border-radius:12px;border:1.5px dashed var(--border);background:transparent;color:var(--text3);cursor:pointer;font-family:'Noto Sans JP',sans-serif;font-weight:600;white-space:nowrap;">全段階を見る</button>
+    </div>
+    <div class="question-text" id="todayPrompt"></div>
+    <div id="promptStageSub" style="margin-top:10px;font-size:0.72rem;color:var(--text3);letter-spacing:0.06em;padding-left:2px;"></div>
+    <!-- 段階プレビュー（折りたたみ） -->
+    <div id="stagePreviewPanel" style="display:none;margin-top:16px;overflow:hidden;">
+      <div style="font-size:0.7rem;font-weight:700;color:var(--text3);letter-spacing:0.1em;margin-bottom:10px;">十牛図 — 100日間の問いの旅</div>
+      <div id="stagePreviewList" style="display:flex;flex-direction:column;gap:6px;"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">
+      <div class="icon icon-pink">✏️</div>
+      今日の記録
+    </div>
+
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+      <span style="background:var(--primary);color:white;font-size:0.65rem;font-weight:700;padding:3px 9px;border-radius:20px;letter-spacing:0.06em;">手ごたえ</span>
+    </div>
+    <div class="tegotae-row">
+      <button class="tegotae-btn" id="btn-maru"    onclick="selectTegotae('maru')">
+        <span class="big-mark">○</span>よかった
+      </button>
+      <button class="tegotae-btn" id="btn-sankaku" onclick="selectTegotae('sankaku')">
+        <span class="big-mark">△</span>まあまあ
+      </button>
+      <button class="tegotae-btn" id="btn-batsu"   onclick="selectTegotae('batsu')">
+        <span class="big-mark">×</span>うまくいかず
+      </button>
+    </div>
+
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;margin-top:4px;">
+      <span style="background:var(--green);color:white;font-size:0.65rem;font-weight:700;padding:3px 9px;border-radius:20px;letter-spacing:0.06em;">運動</span>
+    </div>
+    <input type="text" id="fieldExercise" placeholder="例：散歩30分、ストレッチ10分" style="margin-bottom:16px;">
+
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+      <span style="background:var(--amber);color:white;font-size:0.65rem;font-weight:700;padding:3px 9px;border-radius:20px;letter-spacing:0.06em;">できごと</span>
+      <span style="font-size:0.68rem;color:var(--text3);">今日あったこと、何でも</span>
+    </div>
+    <input type="text" id="fieldEvents" placeholder="例：同僚と意見がぶつかった、久しぶりに友人に連絡した" style="margin-bottom:20px;">
+
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+      <span style="background:var(--accent);color:white;font-size:0.65rem;font-weight:700;padding:3px 9px;border-radius:20px;letter-spacing:0.06em;">内省メモ</span>
+      <span style="font-size:0.68rem;color:var(--text3);">問いへの答え・気づき</span>
+    </div>
+    <textarea class="main-textarea" id="mainEntry" placeholder="今日の問いに向き合って、感じたこと・気づいたこと・迷っていること。
+正直に、飾らずに。短くてもいい。"></textarea>
+
+    <div class="mood-slider-wrap">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+      <span style="background:var(--primary-light);color:white;font-size:0.65rem;font-weight:700;padding:3px 9px;border-radius:20px;letter-spacing:0.06em;">気分</span>
+      <span style="font-size:0.68rem;color:var(--text3);">今の気持ちを直感で</span>
+    </div>
+      <div class="mood-slider-labels">
+        <span>😔 イマイチ</span>
+        <span>😐 普通</span>
+        <span>😊 最高</span>
+      </div>
+      <div class="mood-slider-track">
+        <input type="range" id="moodSlider" min="1" max="5" step="1" value="3" oninput="updateMoodDisplay(this.value)">
+      </div>
+      <div class="mood-val-display" id="moodValDisplay">3 — 普通</div>
+    </div>
+
+    <button class="save-btn" onclick="saveEntry()">記録する 🌱</button>
+  </div>
+
+  <!-- 変容グラフ -->
+  <div class="graph-card">
+    <div class="graph-header">
+      <div class="card-title" style="margin-bottom:0;">
+        <div class="icon icon-purple">📈</div>
+        感情の波・変容の記録
+      </div>
+      <div class="graph-tabs">
+        <button class="graph-tab active" onclick="setGraphRange(7,this)">7日</button>
+        <button class="graph-tab" onclick="setGraphRange(30,this)">30日</button>
+        <button class="graph-tab" onclick="setGraphRange(100,this)">全体</button>
+      </div>
+    </div>
+    <div class="graph-legend">
+      <div class="graph-leg"><div class="graph-leg-dot" style="background:#7c5cbf;"></div>手ごたえ</div>
+      <div class="graph-leg"><div class="graph-leg-dot" style="background:#ff7eb3;"></div>気分スコア</div>
+      <div class="graph-leg" style="margin-left:auto;font-size:0.65rem;color:var(--text3);">ポイントをタップ → 詳細</div>
+    </div>
+    <div style="position:relative; width:100%; height:220px;">
+      <canvas id="vzChart" style="cursor:pointer;"></canvas>
+    </div>
+    <div style="text-align:right; margin-top:8px;">
+      <button id="demoBtn" onclick="toggleDemo()" style="font-size:0.7rem; padding:4px 12px; border-radius:12px; border:1.5px dashed var(--border); background:transparent; color:var(--text3); cursor:pointer; font-family:'Noto Sans JP',sans-serif; font-weight:600; transition:all 0.2s;">📊 デモデータで確認</button>
+    </div>
+    <div class="graph-stat-row" id="graphStats">
+      <div class="graph-stat">
+        <div class="graph-stat-label">平均手ごたえ</div>
+        <div class="graph-stat-val">—</div>
+        <div class="graph-stat-sub">記録をつけると表示</div>
+      </div>
+      <div class="graph-stat">
+        <div class="graph-stat-label">平均気分</div>
+        <div class="graph-stat-val">—</div>
+        <div class="graph-stat-sub">記録をつけると表示</div>
+      </div>
+      <div class="graph-stat">
+        <div class="graph-stat-label">連続記録</div>
+        <div class="graph-stat-val">0</div>
+        <div class="graph-stat-sub">日連続</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- AI内省サポート（統合版） -->
+  <div class="reflect-card">
+    <div class="card-title" style="color:white;margin-bottom:16px;">
+      <div class="icon" style="background:rgba(255,255,255,0.1);">🔮</div>
+      AI内省サポート
+    </div>
+
+    <div class="reflect-tabs">
+      <button class="reflect-tab active" onclick="switchReflectTab('today',this)">今日の振り返り</button>
+      <button class="reflect-tab" onclick="switchReflectTab('change',this)">変容を読み解く</button>
+      <button class="reflect-tab" onclick="switchReflectTab('kw',this)">ことばの変化</button>
+    </div>
+
+    <!-- 今日の振り返り（従来機能） -->
+    <div class="reflect-panel active" id="reflectPanelToday">
+      <p class="reflect-ai-desc">記録が3つ以上溜まったとき、深く振り返りたいときだけ使う。<br>濫用は禁物。自分で考え抜いた後の補助として。</p>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:4px;">
+        <button class="reflect-run-btn" id="todayRunBtn" onclick="requestAIAnalysis()">振り返りを依頼する</button>
+        <button onclick="runReflectDemo()" style="background:transparent;border:1.5px dashed rgba(255,255,255,0.2);color:rgba(255,255,255,0.4);padding:10px 16px;font-family:'Noto Sans JP',sans-serif;font-size:0.75rem;font-weight:600;cursor:pointer;border-radius:20px;transition:all 0.2s;" onmouseover="this.style.color='rgba(255,255,255,0.7)'" onmouseout="this.style.color='rgba(255,255,255,0.4)'">📋 デモを見る</button>
+      </div>
+      <div class="reflect-loading" id="aiLoading">✦ 内省中…</div>
+      <div class="reflect-response" id="aiResponse"></div>
+    </div>
+
+    <!-- 変容を読み解く -->
+    <div class="reflect-panel" id="reflectPanelChange">
+      <p class="reflect-ai-desc">蓄積された記録をもとに、AIが変容の兆しを読み取り、気づきを引き出す問いを返します。答えを与えるのではなく、あなた自身が気づくための対話です。</p>
+      <div class="reflect-period-row">
+        <button class="reflect-period-btn active" onclick="selectReflectPeriod(7,this)">直近7日</button>
+        <button class="reflect-period-btn" onclick="selectReflectPeriod(30,this)">直近30日</button>
+        <button class="reflect-period-btn" onclick="selectReflectPeriod(100,this)">全期間</button>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;">
+        <button class="reflect-run-btn" id="reflectRunBtn" onclick="runReflectAI()">変容を読み解く →</button>
+        <button onclick="runChangeDemo()" style="background:transparent;border:1.5px dashed rgba(255,255,255,0.2);color:rgba(255,255,255,0.4);padding:10px 16px;font-family:'Noto Sans JP',sans-serif;font-size:0.75rem;font-weight:600;cursor:pointer;border-radius:20px;" onmouseover="this.style.color='rgba(255,255,255,0.7)'" onmouseout="this.style.color='rgba(255,255,255,0.4)'">📋 デモを見る</button>
+      </div>
+      <div class="reflect-loading" id="reflectLoading">✦ あなたの言葉を辿っています…</div>
+      <div class="reflect-response" id="reflectResponse"></div>
+      <div class="reflect-followup-row" id="reflectFollowupRow">
+        <button class="reflect-followup-btn" onclick="runFollowup('この変化について、もっと深く問いかけてください')">もっと深く →</button>
+        <button class="reflect-followup-btn" onclick="runFollowup('次の一歩として、何を試してみるといいでしょうか')">次の一歩は？</button>
+        <button class="reflect-followup-btn" onclick="runFollowup('まだ気づいていないことがあれば、指摘してください')">見えていないものは？</button>
+      </div>
+    </div>
+
+    <!-- ことばの変化 -->
+    <div class="reflect-panel" id="reflectPanelKw">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;flex-wrap:wrap;gap:8px;">
+        <p class="reflect-ai-desc" style="margin-bottom:0;">記録に繰り返し登場する言葉を期間ごとに比較します。言葉の変化が、気づいていない変容を映し出すことがあります。</p>
+        <button onclick="toggleKwDemo(this)" style="background:transparent;border:1.5px dashed rgba(255,255,255,0.2);color:rgba(255,255,255,0.4);padding:6px 14px;font-family:'Noto Sans JP',sans-serif;font-size:0.72rem;font-weight:600;cursor:pointer;border-radius:16px;white-space:nowrap;transition:all 0.2s;" onmouseover="this.style.color='rgba(255,255,255,0.7)'" onmouseout="if(!this.dataset.active)this.style.color='rgba(255,255,255,0.4)'">📋 デモを見る</button>
+      </div>
+      <div class="kw-period-grid" id="kwGrid">
+        <div class="kw-empty">記録が溜まると<br>ことばの変化が見えてきます</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title" style="justify-content:space-between;">
+      <div style="display:flex;align-items:center;gap:8px;">
+        <div class="icon icon-amber">📅</div>
+        これまでの記録
+      </div>
+      <div style="display:flex;gap:6px;">
+        <button onclick="setCalView('cal',this)" id="calViewBtnCal" style="font-size:0.65rem;padding:4px 10px;border-radius:10px;border:1.5px solid var(--primary);background:var(--primary);color:white;cursor:pointer;font-family:'Noto Sans JP',sans-serif;font-weight:700;">カレンダー</button>
+        <button onclick="setCalView('list',this)" id="calViewBtnList" style="font-size:0.65rem;padding:4px 10px;border-radius:10px;border:1.5px solid var(--border);background:transparent;color:var(--text3);cursor:pointer;font-family:'Noto Sans JP',sans-serif;font-weight:600;">リスト</button>
+      </div>
+    </div>
+    <!-- カレンダービュー -->
+    <div id="calView">
+      <div class="cal-nav">
+        <button class="cal-nav-btn" onclick="moveCalMonth(-1)">‹</button>
+        <span class="cal-nav-title" id="calMonthTitle"></span>
+        <button class="cal-nav-btn" onclick="moveCalMonth(1)">›</button>
+      </div>
+      <div class="cal-grid" id="calGrid"></div>
+      <div class="cal-summary" id="calSummary"></div>
+    </div>
+    <!-- リストビュー（折りたたみ） -->
+    <div id="listView" style="display:none;">
+      <div class="entries-list" id="entriesList"></div>
+    </div>
+  </div>
+
+  <footer>百日行 — 一進一退、それでも続ける。</footer>
+</div>
+
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="title" id="modalTitle"></span>
+      <button class="modal-close" onclick="closeModalDirect()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-meta" id="modalMeta"></div>
+      <!-- 表示モード -->
+      <div id="modalViewMode">
+        <div class="modal-full-text" id="modalBody"></div>
+        <div class="modal-action-row">
+          <button class="btn-edit" onclick="startEdit()">✏️ 編集する</button>
+          <button class="btn-delete" onclick="deleteEntry()">削除</button>
+        </div>
+      </div>
+      <!-- 編集モード -->
+      <div class="modal-edit-area" id="modalEditMode">
+        <div>
+          <div style="font-size:0.72rem;font-weight:700;color:var(--text2);margin-bottom:5px;">できごと</div>
+          <input type="text" id="editEvents" placeholder="できごと">
+        </div>
+        <div>
+          <div style="font-size:0.72rem;font-weight:700;color:var(--text2);margin-bottom:5px;">運動記録</div>
+          <input type="text" id="editExercise" placeholder="運動記録">
+        </div>
+        <div>
+          <div style="font-size:0.72rem;font-weight:700;color:var(--text2);margin-bottom:5px;">内省メモ</div>
+          <textarea id="editText" placeholder="内省メモ"></textarea>
+        </div>
+        <div class="modal-action-row">
+          <button class="btn-edit" onclick="cancelEdit()">キャンセル</button>
+          <button class="btn-save-edit" onclick="saveEdit()">保存する</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+// 十牛図に基づく10段階の問い（各段階10日間使用）
+const STAGE_PROMPTS = [
+  "今日、モヤモヤと感じていることは？",           // 第1段階：探索
+  "今日、興味のあることは？",                      // 第2段階：気づき
+  "今日、チャレンジしたいと思うことは？",          // 第3段階：抵抗
+  "今日、チャレンジしてみたことは？",              // 第4段階：受容
+  "チャレンジを続けるために必要なことは？",        // 第5段階：手放し
+  "今日、何か変化を感じることは？",               // 第6段階：再構築
+  "今日、自然にやれたことは？",                    // 第7段階：試行
+  "今日、夢中になれたことは？",                    // 第8段階：定着
+  "今日、自分らしいと感じたことは？",              // 第9段階：統合
+  "今日、自分の変化が誰かに影響を与えたと感じたことは？", // 第10段階：開花
+];
+const STAGE_NAMES = ["探索","気づき","抵抗","受容","手放し","再構築","試行","定着","統合","開花"];
+const STAGE_SUBTITLES = [
+  "牛を探す — まだ見ぬ自分を探して",
+  "足跡を見つける — 気づきの芽が生まれる",
+  "牛を見る — 変化への抵抗と向き合う",
+  "牛を捕まえる — 自分の課題を受け入れる",
+  "牛を飼いならす — 継続の力を育てる",
+  "牛に乗って帰る — 変化が身になりはじめる",
+  "牛を忘れる — 自然体で動けるようになる",
+  "人も牛も忘れる — 夢中で生きている",
+  "本源に帰る — 自分らしさが戻ってくる",
+  "街に出て手を差し伸べる — 変容が周りに広がる",
+];
+const STAGES = STAGE_NAMES; // 後方互換
+
+let entries = JSON.parse(localStorage.getItem('hyakunichi_entries') || '[]');
+let startDate = localStorage.getItem('hyakunichi_start');
+let selectedTegotae = '';
+
+if (!startDate) {
+  startDate = new Date().toISOString().split('T')[0];
+  localStorage.setItem('hyakunichi_start', startDate);
+}
+
+function getDayNumber() {
+  const start = new Date(startDate);
+  const now = new Date();
+  const diff = Math.floor((now - start) / (1000*60*60*24)) + 1;
+  return Math.min(Math.max(diff, 1), 100);
+}
+
+function init() {
+  const day = getDayNumber();
+  document.getElementById('currentDay').textContent = day;
+  const stage = Math.min(Math.ceil(day/10), 10);
+  document.getElementById('stageBadge').textContent = `第${stage}段階：${STAGES[stage-1]}`;
+  const now = new Date();
+  document.getElementById('todayDate').textContent = `${now.getFullYear()}年${now.getMonth()+1}月${now.getDate()}日`;
+  const pct = Math.round((day/100)*100);
+  document.getElementById('progressPct').textContent = pct + '%';
+  document.getElementById('progressBar').style.width = pct + '%';
+
+  const dots = document.getElementById('stagesDots');
+  dots.innerHTML = '';
+  for (let i = 1; i <= 10; i++) {
+    const d = document.createElement('div');
+    d.className = 'sdot' + (i < stage ? ' done' : i === stage ? ' active' : '');
+    d.innerHTML = `<div class="sdot-label">第${i}段階<br>${STAGES[i-1]}</div>`;
+    dots.appendChild(d);
+  }
+
+  // 段階に対応した問いを表示（各段階10日間固定）
+  const stageIdx = stage - 1;
+  document.getElementById('todayPrompt').textContent = STAGE_PROMPTS[stageIdx];
+  // 問いカードに段階サブタイトルを表示
+  const promptSubEl = document.getElementById('promptStageSub');
+  if (promptSubEl) promptSubEl.textContent = STAGE_SUBTITLES[stageIdx];
+  renderEntries();
+  renderCalendar();
+}
+
+function selectTegotae(val) {
+  selectedTegotae = val;
+  ['maru','sankaku','batsu'].forEach(v => {
+    document.getElementById('btn-'+v).className = 'tegotae-btn' + (v === val ? ' sel-'+v : '');
+  });
+}
+
+const MOOD_LABELS = {1:'イマイチ', 2:'低め', 3:'普通', 4:'良好', 5:'最高'};
+function updateMoodDisplay(val) {
+  document.getElementById('moodValDisplay').textContent = val + ' — ' + (MOOD_LABELS[+val] || '');
+}
+
+function saveEntry() {
+  const text = document.getElementById('mainEntry').value.trim();
+  const events = document.getElementById('fieldEvents').value.trim();
+  if (!text && !selectedTegotae && !events) {
+    showToast('何か記録してから保存してください');
+    return;
+  }
+  const entry = {
+    id: Date.now(),
+    date: new Date().toISOString(),
+    day: getDayNumber(),
+    tegotae: selectedTegotae,
+    exercise: document.getElementById('fieldExercise').value.trim(),
+    events,
+    text,
+    mood: +document.getElementById('moodSlider').value,
+  };
+  entries.unshift(entry);
+  localStorage.setItem('hyakunichi_entries', JSON.stringify(entries));
+  document.getElementById('mainEntry').value = '';
+  document.getElementById('fieldExercise').value = '';
+  document.getElementById('fieldEvents').value = '';
+  document.getElementById('moodSlider').value = 3;
+  document.getElementById('moodValDisplay').textContent = '3 — 普通';
+  ['maru','sankaku','batsu'].forEach(v => { document.getElementById('btn-'+v).className = 'tegotae-btn'; });
+  selectedTegotae = '';
+  renderEntries();
+  showToast('記録しました 🌱 続けることが変容をつくる');
+}
+
+function tegotaeLabel(v) { return v==='maru'?'○':v==='sankaku'?'△':v==='batsu'?'×':''; }
+function tegotaeClass(v) { return v==='maru'?'tag-maru':v==='sankaku'?'tag-sankaku':v==='batsu'?'tag-batsu':''; }
+
+let calCurrentYear  = new Date().getFullYear();
+let calCurrentMonth = new Date().getMonth();
+let calViewMode = 'cal';
+
+function setCalView(mode, btn) {
+  calViewMode = mode;
+  document.getElementById('calView').style.display  = mode === 'cal'  ? 'block' : 'none';
+  document.getElementById('listView').style.display = mode === 'list' ? 'block' : 'none';
+  // ボタンスタイル
+  ['Cal','List'].forEach(v => {
+    const b = document.getElementById('calViewBtn'+v);
+    const active = (v.toLowerCase() === mode);
+    b.style.background   = active ? 'var(--primary)' : 'transparent';
+    b.style.color        = active ? 'white' : 'var(--text3)';
+    b.style.borderColor  = active ? 'var(--primary)' : 'var(--border)';
+    b.style.fontWeight   = active ? '700' : '600';
+  });
+  if (mode === 'cal') renderCalendar();
+}
+
+function moveCalMonth(dir) {
+  calCurrentMonth += dir;
+  if (calCurrentMonth > 11) { calCurrentMonth = 0;  calCurrentYear++; }
+  if (calCurrentMonth < 0)  { calCurrentMonth = 11; calCurrentYear--; }
+  renderCalendar();
+}
+
+function renderCalendar() {
+  const year = calCurrentYear, month = calCurrentMonth;
+  const title = document.getElementById('calMonthTitle');
+  title.textContent = `${year}年${month+1}月`;
+
+  // その月の全日付を生成
+  const firstDay = new Date(year, month, 1).getDay(); // 0=日
+  const daysInMonth = new Date(year, month+1, 0).getDate();
+  const today = new Date();
+
+  // entriesをdateキーで引く
+  const entryMap = {};
+  entries.forEach(e => {
+    const key = e.date.split('T')[0];
+    if (!entryMap[key]) entryMap[key] = [];
+    entryMap[key].push(e);
+  });
+
+  const DOWS = ['日','月','火','水','木','金','土'];
+  let html = DOWS.map(d => `<div class="cal-dow">${d}</div>`).join('');
+
+  // 空白セル
+  for (let i = 0; i < firstDay; i++) html += `<div class="cal-cell empty"></div>`;
+
+  for (let d = 1; d <= daysInMonth; d++) {
+    const dateStr = `${year}-${String(month+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+    const isToday = (today.getFullYear()===year && today.getMonth()===month && today.getDate()===d);
+    const dayEntries = entryMap[dateStr] || [];
+    const hasEntry = dayEntries.length > 0;
+    const e = dayEntries[0];
+    const dotClass = hasEntry
+      ? (e.tegotae==='maru' ? 'cal-dot-maru' : e.tegotae==='sankaku' ? 'cal-dot-sankaku' : e.tegotae==='batsu' ? 'cal-dot-batsu' : 'cal-dot-none')
+      : '';
+
+    let cls = 'cal-cell ';
+    if (isToday) cls += 'today';
+    else if (hasEntry) cls += 'has-entry';
+    else cls += 'no-entry';
+
+    const onclick = hasEntry ? `onclick="handleCalClick(${e.id},event)"` : '';
+    html += `<div class="${cls}" ${onclick}>
+      <span>${d}</span>
+      ${hasEntry ? `<div class="cal-dot ${dotClass}"></div>` : ''}
+    </div>`;
+  }
+
+  document.getElementById('calGrid').innerHTML = html;
+  calSelectedId = null;
+  hideCalSummary();
+}
+
+let calSelectedId = null;
+
+function handleCalClick(id, evt) {
+  evt.stopPropagation();
+  if (calSelectedId === id) {
+    // 同じ日を再タップ → モーダルを開く
+    openModal(id);
+    return;
+  }
+  calSelectedId = id;
+  showCalSummary(id);
+  // セルのハイライト更新
+  document.querySelectorAll('.cal-cell.selected').forEach(c => c.classList.remove('selected'));
+  evt.currentTarget.classList.add('selected');
+}
+
+function showCalSummary(id) {
+  const e = entries.find(x => x.id === id);
+  if (!e) return;
+  const d = new Date(e.date);
+  const moodMap = {1:'イマイチ',2:'低め',3:'普通',4:'良好',5:'最高'};
+  const tLabel = tegotaeLabel(e.tegotae);
+  const chips = [
+    tLabel ? `手ごたえ ${tLabel}` : '',
+    e.mood  ? `気分 ${moodMap[+e.mood]||''}` : '',
+    e.exercise ? `運動 ${e.exercise}` : '',
+  ].filter(Boolean).map(c => `<span class="cal-summary-chip">${escapeHtml(c)}</span>`).join('');
+  const textPreview = e.text ? escapeHtml(e.text.slice(0,60)) + (e.text.length>60?'…':'') : '';
+  const eventsLine = e.events ? `<div style="font-weight:600;margin-bottom:4px;">${escapeHtml(e.events)}</div>` : '';
+  const el = document.getElementById('calSummary');
+  el.innerHTML = `
+    <div class="cal-summary-header">
+      <span class="cal-summary-title">${d.getMonth()+1}月${d.getDate()}日（${e.day}日目）</span>
+      <button class="cal-summary-open" onclick="openModal(${e.id})">詳細・編集 →</button>
+    </div>
+    ${chips ? `<div class="cal-summary-chips">${chips}</div>` : ''}
+    ${eventsLine}
+    ${textPreview ? `<div class="cal-summary-text">${textPreview}</div>` : '<div class="cal-summary-text" style="color:var(--text3);">（内省メモなし）</div>'}
+  `;
+  el.style.display = 'block';
+  // スクロールで見えるように
+  el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+function hideCalSummary() {
+  const el = document.getElementById('calSummary');
+  if (el) el.style.display = 'none';
+  calSelectedId = null;
+}
+
+function renderEntries() {
+  // カレンダー更新
+  if (calViewMode === 'cal') renderCalendar();
+
+  // リスト更新
+  const list = document.getElementById('entriesList');
+  if (!list) return;
+  if (entries.length === 0) {
+    list.innerHTML = `<div class="empty-state"><span class="emoji">📝</span>まだ記録がありません。<br>最初の一歩を踏み出しましょう。</div>`;
+    return;
+  }
+  list.innerHTML = entries.map(e => {
+    const d = new Date(e.date);
+    const dateStr = `${d.getMonth()+1}/${d.getDate()}`;
+    const tLabel = tegotaeLabel(e.tegotae);
+    const tClass = tegotaeClass(e.tegotae);
+    const preview = e.text || e.events || 'できごとのみ記録';
+    return `<div class="entry-card" onclick="openModal(${e.id})">
+      <div class="entry-day-badge">${e.day}</div>
+      <div class="entry-content">
+        <div class="entry-header">
+          <span class="entry-date">${dateStr}</span>
+          <div class="entry-marks">
+            ${tLabel ? `<span class="tegotae-tag ${tClass}">${tLabel}</span>` : ''}
+            ${e.mood ? `<span class="mood-chip">${e.mood}/5</span>` : ''}
+          </div>
+        </div>
+        <div class="entry-text">${escapeHtml(preview)}</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+let currentEditId = null;
+
+function openModal(id) {
+  const e = entries.find(x => x.id === id);
+  if (!e) return;
+  currentEditId = id;
+  const d = new Date(e.date);
+  document.getElementById('modalTitle').textContent = `${e.day}日目の記録`;
+  const moodMap = {1:'イマイチ',2:'低め',3:'普通',4:'良好',5:'最高'};
+  const chips = [
+    `${d.getFullYear()}年${d.getMonth()+1}月${d.getDate()}日`,
+    e.tegotae ? `手ごたえ：${tegotaeLabel(e.tegotae)}` : '',
+    e.mood ? `気分：${e.mood}/5（${moodMap[+e.mood]||''}）` : '',
+    e.exercise ? `運動：${e.exercise}` : '',
+    e.events ? `できごと：${e.events}` : '',
+  ].filter(Boolean);
+  document.getElementById('modalMeta').innerHTML = chips.map(c => `<span class="meta-chip">${escapeHtml(c)}</span>`).join('');
+  document.getElementById('modalBody').textContent = e.text || '（内省メモなし）';
+  // 表示モードに戻す
+  document.getElementById('modalViewMode').style.display = 'block';
+  document.getElementById('modalEditMode').style.display = 'none';
+  document.getElementById('modalOverlay').classList.add('open');
+}
+
+function startEdit() {
+  const e = entries.find(x => x.id === currentEditId);
+  if (!e) return;
+  document.getElementById('editEvents').value = e.events || '';
+  document.getElementById('editExercise').value = e.exercise || '';
+  document.getElementById('editText').value = e.text || '';
+  document.getElementById('modalViewMode').style.display = 'none';
+  document.getElementById('modalEditMode').style.display = 'flex';
+}
+
+function cancelEdit() {
+  document.getElementById('modalViewMode').style.display = 'block';
+  document.getElementById('modalEditMode').style.display = 'none';
+}
+
+function saveEdit() {
+  const idx = entries.findIndex(x => x.id === currentEditId);
+  if (idx === -1) return;
+  entries[idx].events   = document.getElementById('editEvents').value.trim();
+  entries[idx].exercise = document.getElementById('editExercise').value.trim();
+  entries[idx].text     = document.getElementById('editText').value.trim();
+  entries[idx].edited   = new Date().toISOString();
+  localStorage.setItem('hyakunichi_entries', JSON.stringify(entries));
+  renderEntries();
+  setTimeout(() => renderGraph(currentGraphRange), 50);
+  showToast('記録を更新しました ✏️');
+  openModal(currentEditId); // 表示モードで再表示
+}
+
+function deleteEntry() {
+  if (!confirm('この記録を削除しますか？')) return;
+  entries = entries.filter(x => x.id !== currentEditId);
+  localStorage.setItem('hyakunichi_entries', JSON.stringify(entries));
+  renderEntries();
+  setTimeout(() => renderGraph(currentGraphRange), 50);
+  closeModalDirect();
+  showToast('記録を削除しました');
+}
+
+function closeModal(e) { if (e.target === document.getElementById('modalOverlay')) closeModalDirect(); }
+function closeModalDirect() { document.getElementById('modalOverlay').classList.remove('open'); }
+
+async function requestAIAnalysis() {
+  if (entries.length < 3) { showToast('記録が3つ以上になってから使えます'); return; }
+  const btn = document.querySelector('.ai-btn');
+  const loading = document.getElementById('aiLoading');
+  const response = document.getElementById('aiResponse');
+  btn.disabled = true;
+  loading.style.display = 'block';
+  response.style.display = 'none';
+  const recent = entries.slice(0, Math.min(entries.length, 7));
+  const summary = recent.map(e =>
+    `【${e.day}日目 手ごたえ:${tegotaeLabel(e.tegotae)||'?'} 状態:${e.mood||'?'}】\nできごと:${e.events||'未記入'}\n内省:${e.text||'未記入'}`
+  ).join('\n\n---\n\n');
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        system: `あなたは中年の危機を乗り越えようとしている人の、内省をサポートする存在です。
+アドバイスや答えを押しつけるのではなく、その人が自分で気づくための問いかけをしてください。
+優しく、正直に、その人の言葉を丁寧に受け取り、3〜4段落で振り返りのサポートをしてください。
+最後に、次の一歩を促す問いをひとつだけ残してください。
+日本語で答えること。説教にならないこと。答えを与えないこと。`,
+        messages: [{ role: 'user', content: `以下は私の最近の記録です。振り返りをサポートしてください。\n\n${summary}` }]
+      })
+    });
+    const data = await res.json();
+    const text = data.content?.map(c => c.text||'').join('') || 'うまく受信できませんでした。';
+    response.textContent = text;
+    response.style.display = 'block';
+  } catch(err) {
+    response.textContent = 'エラーが発生しました。後でもう一度お試しください。';
+    response.style.display = 'block';
+  }
+  loading.style.display = 'none';
+  btn.disabled = false;
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3200);
+}
+function escapeHtml(str) {
+  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+init();
+
+// ── 振り返り機能 ──
+let reflectPeriod = 7;
+let reflectHistory = []; // 会話履歴
+
+// ── 段階プレビュー ──
+function toggleStagePreview() {
+  const panel = document.getElementById('stagePreviewPanel');
+  const btn = document.getElementById('stagePreviewBtn');
+  const isOpen = panel.style.display !== 'none';
+  if (isOpen) {
+    panel.style.display = 'none';
+    btn.textContent = '全段階を見る';
+    return;
+  }
+  // リスト生成
+  const day = getDayNumber();
+  const currentStage = Math.min(Math.ceil(day/10), 10);
+  const list = document.getElementById('stagePreviewList');
+  list.innerHTML = STAGE_PROMPTS.map((q, i) => {
+    const s = i + 1;
+    const isCurrent = s === currentStage;
+    const isDone = s < currentStage;
+    return `<div style="display:flex;gap:10px;align-items:flex-start;padding:8px 10px;border-radius:10px;background:${isCurrent ? 'var(--primary-pale)' : isDone ? 'rgba(160,149,184,0.06)' : 'transparent'};border:1px solid ${isCurrent ? 'var(--primary)' : 'transparent'};">
+      <div style="min-width:22px;height:22px;border-radius:50%;background:${isCurrent ? 'var(--primary)' : isDone ? 'var(--primary-light)' : 'var(--border)'};display:flex;align-items:center;justify-content:center;font-size:0.6rem;font-weight:700;color:${isCurrent||isDone ? 'white' : 'var(--text3)'};">${s}</div>
+      <div>
+        <div style="font-size:0.65rem;font-weight:700;color:${isCurrent ? 'var(--primary)' : 'var(--text3)'};letter-spacing:0.06em;margin-bottom:2px;">${STAGE_NAMES[i]}（${(i)*10+1}〜${(i+1)*10}日）</div>
+        <div style="font-size:0.82rem;color:${isCurrent ? 'var(--text)' : isDone ? 'var(--text2)' : 'var(--text3)'};font-weight:${isCurrent ? '600' : '400'};">${q}</div>
+        <div style="font-size:0.65rem;color:var(--text3);margin-top:2px;">${STAGE_SUBTITLES[i]}</div>
+      </div>
+    </div>`;
+  }).join('');
+  panel.style.display = 'block';
+  btn.textContent = '閉じる';
+}
+
+// ── 振り返りデモ（今日の振り返りタブ） ──
+function runReflectDemo() {
+  const el = document.getElementById('aiResponse');
+  const loading = document.getElementById('aiLoading');
+  loading.style.display = 'block';
+  el.style.display = 'none';
+  setTimeout(() => {
+    loading.style.display = 'none';
+    el.textContent = `【デモ】振り返りの例
+
+ここ数日の記録を読んでいると、「同僚とぶつかった」「うまくいかなかった」という言葉が続いていますね。でも同時に、「散歩した」「少し考えた」という小さな動きも見えます。
+
+うまくいかない日に、それでも体を動かしたこと——これは思っているより大きなことかもしれません。
+
+ひとつ問います。「うまくいかなかった」と感じた出来事の中で、もし自分が違う行動をとれたとしたら、何が変わっていたと思いますか？`;
+    el.style.display = 'block';
+  }, 1200);
+}
+
+// ── 変容デモ（変容を読み解くタブ） ──
+function runChangeDemo() {
+  const el = document.getElementById('reflectResponse');
+  const loading = document.getElementById('reflectLoading');
+  const followup = document.getElementById('reflectFollowupRow');
+  loading.style.display = 'block';
+  el.style.display = 'none';
+  followup.style.display = 'none';
+  setTimeout(() => {
+    loading.style.display = 'none';
+    el.textContent = `【デモ】変容の読み解き例
+
+序盤の記録では「モヤモヤ」「どうすれば」という言葉が多く見えました。中盤になると「試してみた」「ぶつかったけど」という言葉が増え、後半には「自然に」「気がついたら」という言葉が出てきています。
+
+これは偶然ではないと思います。最初は霧の中にいたあなたが、少しずつ手を伸ばし始め、今は足が動くようになってきている。一進一退に見えても、言葉の質が変わっています。
+
+ひとつ問います。「自然にやれた」と感じた瞬間——それはいつで、何をしているときでしたか？`;
+    el.style.display = 'block';
+    followup.style.display = 'flex';
+  }, 1400);
+}
+
+function switchReflectTab(tab, btn) {
+  document.querySelectorAll('.reflect-tab').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  ['Today','Change','Kw'].forEach(p => {
+    const el = document.getElementById('reflectPanel'+p);
+    if (el) el.classList.remove('active');
+  });
+  const map = { today:'Today', change:'Change', kw:'Kw' };
+  const panel = document.getElementById('reflectPanel' + map[tab]);
+  if (panel) panel.classList.add('active');
+  if (tab === 'kw') renderKeywords();
+}
+
+function selectReflectPeriod(days, btn) {
+  reflectPeriod = days;
+  document.querySelectorAll('.reflect-period-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  // リセット
+  document.getElementById('reflectResponse').style.display = 'none';
+  document.getElementById('reflectFollowupRow').style.display = 'none';
+  reflectHistory = [];
+}
+
+async function runReflectAI() {
+  const all = JSON.parse(localStorage.getItem('hyakunichi_entries') || '[]');
+  if (all.length < 3) { showToast('記録が3つ以上になってから使えます'); return; }
+
+  const btn = document.getElementById('reflectRunBtn');
+  const loading = document.getElementById('reflectLoading');
+  const responseEl = document.getElementById('reflectResponse');
+  const followupRow = document.getElementById('reflectFollowupRow');
+
+  btn.disabled = true;
+  loading.style.display = 'block';
+  responseEl.style.display = 'none';
+  followupRow.style.display = 'none';
+
+  const now = new Date();
+  const cutoff = new Date(now);
+  cutoff.setDate(cutoff.getDate() - reflectPeriod + 1);
+  const filtered = all.filter(e => new Date(e.date) >= cutoff).reverse();
+  const moodMap = {1:'イマイチ',2:'低め',3:'普通',4:'良好',5:'最高'};
+  const tMap = {maru:'○',sankaku:'△',batsu:'×'};
+
+  const summary = filtered.map(e => {
+    const d = new Date(e.date);
+    return `【${e.day}日目 ${d.getMonth()+1}/${d.getDate()} 手ごたえ:${tMap[e.tegotae]||'?'} 気分:${moodMap[+e.mood]||'?'}】
+できごと: ${e.events||'未記入'}
+内省: ${e.text||'未記入'}`;
+  }).join('\n\n');
+
+  const systemPrompt = `あなたは「百日行」という内省サービスのAIガイドです。40〜50代の中年期を乗り越えようとしているユーザーの、これまでの記録を読み解きます。\n\n以下のルールを必ず守ってください：\n- 答えや解決策を与えない。気づきを引き出す問いで締める\n- 記録の言葉を丁寧に拾い、「あなたは〇〇と書いていました」と引用しながら話す\n- 変化の兆し（言葉の変化、手ごたえの推移）を具体的に指摘する\n- 一進一退を肯定し、評価・判断をしない\n- 最後に必ず「ひとつの問い」だけを残す\n- 日本語で、温かく、しかし正直に。400字程度で`;
+
+  const userMessage = reflectHistory.length === 0
+    ? `直近${reflectPeriod}日分の記録です。変容の兆しを読み取り、振り返りをサポートしてください。
+
+${summary}`
+    : reflectHistory[reflectHistory.length - 1].content; // フォローアップは別途セット
+
+  try {
+    const messages = reflectHistory.length === 0
+      ? [{ role: 'user', content: userMessage }]
+      : reflectHistory;
+
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        system: systemPrompt,
+        messages
+      })
+    });
+    const data = await res.json();
+    const text = data.content?.map(c => c.text||'').join('') || 'うまく受信できませんでした。';
+
+    // 会話履歴に追加
+    if (reflectHistory.length === 0) {
+      reflectHistory = [
+        { role: 'user', content: userMessage },
+        { role: 'assistant', content: text }
+      ];
+    } else {
+      reflectHistory.push({ role: 'assistant', content: text });
+    }
+
+    responseEl.textContent = text;
+    responseEl.style.display = 'block';
+    followupRow.style.display = 'flex';
+  } catch(err) {
+    responseEl.textContent = 'エラーが発生しました。';
+    responseEl.style.display = 'block';
+  }
+  loading.style.display = 'none';
+  btn.disabled = false;
+}
+
+async function runFollowup(question) {
+  if (!reflectHistory.length) return;
+  const btn = document.getElementById('reflectRunBtn');
+  const loading = document.getElementById('reflectLoading');
+  const responseEl = document.getElementById('reflectResponse');
+  const followupRow = document.getElementById('reflectFollowupRow');
+
+  btn.disabled = true;
+  loading.style.display = 'block';
+  followupRow.style.display = 'none';
+
+  reflectHistory.push({ role: 'user', content: question });
+
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 800,
+        system: `あなたは「百日行」のAIガイドです。同じトーンで続きの対話をしてください。答えを与えず、問いで締めること。日本語で400字以内。`,
+        messages: reflectHistory
+      })
+    });
+    const data = await res.json();
+    const text = data.content?.map(c => c.text||'').join('') || '';
+    reflectHistory.push({ role: 'assistant', content: text });
+    responseEl.textContent = text;
+    responseEl.style.display = 'block';
+    followupRow.style.display = 'flex';
+  } catch(e) {
+    responseEl.textContent = 'エラーが発生しました。';
+    responseEl.style.display = 'block';
+  }
+  loading.style.display = 'none';
+  btn.disabled = false;
+}
+
+// ── キーワード分析 ──
+const STOP_WORDS = new Set([
+  'こと','もの','ため','よう','それ','これ','あれ','そう','どう','ない','ある','いる','する','なる','できる',
+  'という','など','から','まで','より','けど','ので','が','は','を','に','で','と','も','の','へ','や',
+  'だ','だっ','です','ます','した','して','して','いた','いる','おり','たい','よい','いい','悪い',
+  'ちょっと','とても','少し','すごく','かなり','もう','まだ','また','でも','しかし','ただ','本当',
+  '今日','昨日','明日','今','時','日','年','月','人','気','事','自分'
+]);
+
+function tokenize(text) {
+  if (!text) return [];
+  // 簡易トークナイズ：句読点・記号で分割し、2文字以上の語を抽出
+  return text
+    .replace(/[。、！？!?・…「」『』【】\(\)\n\n	]/g, ' ')
+    .split(/\s+/)
+    .filter(w => w.length >= 2 && !STOP_WORDS.has(w) && !/^[0-9０-９]+$/.test(w));
+}
+
+function countWords(entries) {
+  const freq = {};
+  entries.forEach(e => {
+    const words = tokenize((e.text || '') + ' ' + (e.events || ''));
+    words.forEach(w => { freq[w] = (freq[w] || 0) + 1; });
+  });
+  return Object.entries(freq)
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 8);
+}
+
+let kwDemoMode = false;
+function toggleKwDemo(btn) {
+  kwDemoMode = !kwDemoMode;
+  if (kwDemoMode) {
+    btn.textContent = '✕ デモを解除';
+    btn.style.borderColor = 'var(--accent)';
+    btn.style.color = 'var(--accent)';
+    btn.dataset.active = '1';
+  } else {
+    btn.textContent = '📋 デモを見る';
+    btn.style.borderColor = 'rgba(255,255,255,0.2)';
+    btn.style.color = 'rgba(255,255,255,0.4)';
+    delete btn.dataset.active;
+  }
+  renderKeywords();
+}
+
+function renderKeywords() {
+  const all = JSON.parse(localStorage.getItem('hyakunichi_entries') || '[]');
+  const grid = document.getElementById('kwGrid');
+
+  // kwデモモードまたはグラフデモモードならDEMO_ENTRIESを使う
+  const source = kwDemoMode || (typeof demoMode !== 'undefined' && demoMode) ? DEMO_ENTRIES : all;
+
+  if (source.length < 3) {
+    grid.innerHTML = '<div class="kw-empty">記録が溜まると<br>ことばの変化が見えてきます</div>';
+    return;
+  }
+
+  // 期間を3分割
+  const sorted = [...source].sort((a, b) => new Date(a.date) - new Date(b.date));
+  const n = sorted.length;
+  const periods = [];
+  if (n >= 9) {
+    const sz = Math.floor(n / 3);
+    periods.push({ label: '序盤', entries: sorted.slice(0, sz) });
+    periods.push({ label: '中盤', entries: sorted.slice(sz, sz*2) });
+    periods.push({ label: '終盤', entries: sorted.slice(sz*2) });
+  } else if (n >= 4) {
+    const mid = Math.floor(n / 2);
+    periods.push({ label: '前半', entries: sorted.slice(0, mid) });
+    periods.push({ label: '後半', entries: sorted.slice(mid) });
+  } else {
+    periods.push({ label: 'これまで', entries: sorted });
+  }
+
+  const colors = ['#7c5cbf', '#ff7eb3', '#4caf82'];
+
+  grid.innerHTML = periods.map((p, pi) => {
+    const words = countWords(p.entries);
+    const max = words[0]?.[1] || 1;
+    const color = colors[pi % colors.length];
+    const bars = words.length > 0
+      ? words.map(([w, c]) => `
+        <div class="kw-item">
+          <span class="kw-word">${w}</span>
+          <div class="kw-bar-bg"><div class="kw-bar-fg" style="width:${Math.round((c/max)*100)}%;background:${color};"></div></div>
+          <span class="kw-count">${c}</span>
+        </div>`).join('')
+      : '<div class="kw-empty" style="padding:8px 0;">テキストが少なすぎます</div>';
+    return `
+      <div class="kw-period-block">
+        <div class="kw-period-label" style="color:${color}88;">${p.label}（${p.entries.length}日）</div>
+        <div class="kw-list">${bars}</div>
+      </div>`;
+  }).join('');
+}
+
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+// mood is now a numeric 1-5 value from slider
+const TEGOTAE_SCORE = {'maru':3,'sankaku':2,'batsu':1};
+let vzChart = null;
+let currentGraphRange = 7;
+
+function buildGraphData(days) {
+  const all = JSON.parse(localStorage.getItem('hyakunichi_entries') || '[]');
+  if (!all.length) return null;
+  const now = new Date();
+  const cutoff = new Date(now);
+  cutoff.setDate(cutoff.getDate() - days + 1);
+  cutoff.setHours(0,0,0,0);
+  const filtered = all.filter(e => new Date(e.date) >= cutoff).reverse();
+  if (!filtered.length) return null;
+  const labels = [], tegotae = [], mood = [];
+  filtered.forEach(e => {
+    const d = new Date(e.date);
+    labels.push(`${d.getMonth()+1}/${d.getDate()}`);
+    tegotae.push(e.tegotae ? TEGOTAE_SCORE[e.tegotae] : null);
+    mood.push(e.mood ? +e.mood : null);
+  });
+  window._graphEntries = filtered;
+  return { labels, tegotae, mood, entries: filtered };
+}
+
+function moodLabel(s) {
+  if (!s && s!==0) return '—';
+  if (s >= 4.5) return '絶好調';
+  if (s >= 3.5) return '好調';
+  if (s >= 2.5) return '普通';
+  if (s >= 1.5) return '低め';
+  return 'イマイチ';
+}
+
+function calcStreak(all) {
+  if (!all.length) return 0;
+  const dates = [...new Set(all.map(e => e.date.split('T')[0]))].sort().reverse();
+  let streak = 0;
+  let check = new Date(); check.setHours(0,0,0,0);
+  for (const d of dates) {
+    const dd = new Date(d);
+    const diff = Math.round((check - dd) / (1000*60*60*24));
+    if (diff <= 1) { streak++; check = dd; } else break;
+  }
+  return streak;
+}
+
+function renderGraph(days) {
+  const data = buildGraphData(days);
+  const statsEl = document.getElementById('graphStats');
+  const canvas = document.getElementById('vzChart');
+
+  if (vzChart) { vzChart.destroy(); vzChart = null; }
+
+  if (!data) {
+    canvas.style.display = 'none';
+    statsEl.innerHTML = `<div class="graph-empty" style="grid-column:1/-1;"><span class="emoji">📊</span>記録が溜まると波形が現れます</div>`;
+    return;
+  }
+  canvas.style.display = 'block';
+
+  vzChart = new Chart(canvas, {
+    type: 'line',
+    data: {
+      labels: data.labels,
+      datasets: [
+        {
+          label: '手ごたえ',
+          data: data.tegotae,
+          borderColor: '#7c5cbf',
+          backgroundColor: 'rgba(124,92,191,0.12)',
+          fill: true,
+          tension: 0.45,
+          pointBackgroundColor: '#7c5cbf',
+          pointBorderColor: '#fff',
+          pointBorderWidth: 2,
+          pointRadius: 5,
+          pointHoverRadius: 7,
+          spanGaps: true,
+          yAxisID: 'y',
+        },
+        {
+          label: '気分スコア',
+          data: data.mood,
+          borderColor: '#ff7eb3',
+          backgroundColor: 'rgba(255,126,179,0.08)',
+          fill: true,
+          tension: 0.45,
+          pointBackgroundColor: '#ff7eb3',
+          pointBorderColor: '#fff',
+          pointBorderWidth: 2,
+          pointRadius: 5,
+          pointHoverRadius: 7,
+          spanGaps: true,
+          yAxisID: 'y',
+        }
+      ]
+    },
+    options: {
+      onClick: (evt, items) => {
+        if (!items.length || !window._graphEntries) return;
+        const e = window._graphEntries[items[0].index];
+        if (e) openModal(e.id);
+      },
+      responsive: true,
+      maintainAspectRatio: false,
+      interaction: { mode: 'index', intersect: false },
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          backgroundColor: 'rgba(45,37,64,0.9)',
+          titleColor: '#fff',
+          bodyColor: 'rgba(255,255,255,0.8)',
+          padding: 10,
+          cornerRadius: 10,
+          callbacks: {
+            title: items => {
+              const idx = items[0]?.dataIndex;
+              if (idx === undefined || !window._graphEntries) return items[0]?.label || '';
+              const e = window._graphEntries[idx];
+              if (!e) return items[0]?.label || '';
+              const d = new Date(e.date);
+              return (d.getMonth()+1)+'/'+(d.getDate()) + (e.events ? '　'+e.events.slice(0,20)+(e.events.length>20?'…':'') : '');
+            },
+            label: ctx => {
+              const v = ctx.raw;
+              if (v === null) return ctx.dataset.label + ': —';
+              if (ctx.dataset.label === '手ごたえ') {
+                const m = {3:'○ よかった', 2:'△ まあまあ', 1:'× うまくいかず'};
+                return '手ごたえ: ' + (m[v] || v);
+              }
+              const ml = {1:'イマイチ', 2:'低め', 3:'普通', 4:'良好', 5:'最高'};
+              return '気分: ' + v + ' (' + (ml[v] || '') + ')';
+            },
+            afterBody: items => {
+              const idx = items[0]?.dataIndex;
+              if (idx === undefined || !window._graphEntries) return [];
+              const e = window._graphEntries[idx];
+              if (!e || !e.text) return ['タップで詳細を見る'];
+              const preview = e.text.slice(0, 30) + (e.text.length > 30 ? '…' : '');
+              return ['📝 ' + preview, '→ タップで詳細'];
+            }
+          },
+
+        }
+      },
+      scales: {
+        x: {
+          grid: { color: 'rgba(160,149,184,0.12)' },
+          ticks: { font: { size: 11, family: "'Noto Sans JP', sans-serif" }, color: '#a095b8', maxRotation: 0, autoSkip: true, maxTicksLimit: 10 }
+        },
+        y: {
+          min: 0.5, max: 5.5,
+          grid: { color: 'rgba(160,149,184,0.12)' },
+          ticks: {
+            stepSize: 1,
+            font: { size: 11, family: "'Noto Sans JP', sans-serif" },
+            color: '#a095b8',
+            callback: v => { const m = {1:'低',2:'やや低',3:'普通',4:'良好',5:'最高'}; return m[v]||''; }
+          }
+        }
+      }
+    }
+  });
+
+  const validT = data.tegotae.filter(v => v !== null);
+  const validM = data.mood.filter(v => v !== null);
+  const avgT = validT.length ? validT.reduce((a,b)=>a+b,0)/validT.length : null;
+  const avgM = validM.length ? validM.reduce((a,b)=>a+b,0)/validM.length : null;
+  const all = JSON.parse(localStorage.getItem('hyakunichi_entries') || '[]');
+  const streak = calcStreak(all);
+
+  const tegotaeDisp = avgT ? (['','×','△','○'][Math.round(avgT)]) : '—';
+  const tegotaeSub = avgT ? (avgT.toFixed(1)+' / 3.0') : 'データなし';
+
+  statsEl.innerHTML = `
+    <div class="graph-stat">
+      <div class="graph-stat-label">平均手ごたえ</div>
+      <div class="graph-stat-val" style="color:#7c5cbf;">${tegotaeDisp}</div>
+      <div class="graph-stat-sub">${tegotaeSub}</div>
+    </div>
+    <div class="graph-stat">
+      <div class="graph-stat-label">平均気分</div>
+      <div class="graph-stat-val" style="color:#ff7eb3;">${moodLabel(avgM)}</div>
+      <div class="graph-stat-sub">${avgM ? avgM.toFixed(1)+' / 5.0' : 'データなし'}</div>
+    </div>
+    <div class="graph-stat">
+      <div class="graph-stat-label">連続記録</div>
+      <div class="graph-stat-val">${streak}</div>
+      <div class="graph-stat-sub">日連続</div>
+    </div>
+  `;
+}
+
+function setGraphRange(days, btn) {
+  currentGraphRange = days;
+  document.querySelectorAll('.graph-tab').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderGraph(days);
+}
+
+const _origSave = window.saveEntry;
+window.saveEntry = function() {
+  _origSave && _origSave();
+  setTimeout(() => renderGraph(currentGraphRange), 100);
+};
+
+renderGraph(7);
+
+let demoMode = false;
+const DEMO_ENTRIES = (() => {
+  const base = new Date();
+  // 30日分のデモデータ（序盤・中盤・終盤で言葉が変わる）
+  const data = [
+    // ── 序盤（1〜10日）：不安・モヤモヤ・迷い ──
+    {t:'batsu',  m:2, ev:'朝から気持ちが重かった',    tx:'なんとなくモヤモヤしている。何が不安なのかもわからない。このまま何も変わらないのだろうかと思うと焦りがある。迷いばかりで動けない自分が嫌だ。'},
+    {t:'sankaku',m:3, ev:'一人で考える時間を作った',   tx:'不安の正体を言葉にしようとしたが、うまくいかない。モヤモヤが晴れない。それでも少し考えられた気がする。迷いはまだある。'},
+    {t:'batsu',  m:2, ev:'同僚とぶつかってしまった',   tx:'また同じことを繰り返した。焦りと不安でいっぱい。自分が何をしたいのか全くわからない。モヤモヤだけが残る。'},
+    {t:'sankaku',m:3, ev:'久しぶりに日記を書いた',     tx:'不安を書き出してみた。モヤモヤの正体は「このまま終わるのでは」という恐れかもしれない。迷いながらも少し整理できた。'},
+    {t:'batsu',  m:2, ev:'何も手につかなかった',       tx:'今日は何もできなかった。焦りと不安だけが膨らむ。このモヤモヤをどうすれば良いのか。迷うばかりで行動できない。'},
+    {t:'sankaku',m:3, ev:'散歩しながら考えた',         tx:'歩きながら考えた。不安がある分、何かを変えたいという気持ちもある。モヤモヤを抱えながら、少しだけ前を向けた気がする。'},
+    {t:'sankaku',m:3, ev:'本を読んで少し落ち着いた',   tx:'不安が少し和らいだ。迷いはあるが、焦らなくてもいいかもしれない。モヤモヤはまだあるけれど、今日は悪くなかった。'},
+    {t:'batsu',  m:2, ev:'仕事でミスをした',           tx:'またやってしまった。不安と焦りが重なる。モヤモヤが消えない。自分を信じられない日が続いている。'},
+    {t:'sankaku',m:3, ev:'友人に近況を話した',         tx:'話を聞いてもらえた。モヤモヤを言葉にすると少し楽になる。不安はまだあるが、一人じゃない感じがした。迷いながらも続けてみよう。'},
+    {t:'maru',   m:4, ev:'小さな目標を決めた',         tx:'今日は少しだけチャレンジしてみた。不安はあるが、動いてみると気持ちが変わる。モヤモヤが少し薄れた気がする。'},
+
+    // ── 中盤（11〜20日）：チャレンジ・発見・葛藤 ──
+    {t:'maru',   m:4, ev:'新しいことを試してみた',     tx:'チャレンジしてみた。うまくいかなかったけど、やってみたこと自体が発見だった。変化を感じはじめている。葛藤はあるが前向きだ。'},
+    {t:'sankaku',m:3, ev:'壁にぶつかった',             tx:'チャレンジしたが壁にぶつかった。でも葛藤しながら考えることで発見がある。変化しようとしている自分を感じる。'},
+    {t:'maru',   m:4, ev:'気づきがあった',             tx:'今日は大きな発見があった。チャレンジし続けることで見えてくるものがある。変化を実感しはじめている。葛藤も成長の一部だと思えてきた。'},
+    {t:'maru',   m:5, ev:'充実した1日だった',          tx:'チャレンジが少しうまくいった。発見と変化を感じる1日。葛藤があるからこそ、前に進んでいる気がする。続けることに意味を感じる。'},
+    {t:'sankaku',m:3, ev:'迷いが戻ってきた',           tx:'また葛藤している。チャレンジを続けるべきか迷う。でも発見もある。変化は一直線じゃないと気づく。'},
+    {t:'maru',   m:4, ev:'人に話を聞いてもらった',     tx:'チャレンジについて話した。発見を共有できると変化が実感できる。葛藤を抱えながらも、やめる気はない。'},
+    {t:'maru',   m:4, ev:'朝の習慣を作りはじめた',     tx:'毎朝チャレンジするようになった。発見が積み重なってきた感じ。変化が少しずつ見えてきた。葛藤が減ってきた気がする。'},
+    {t:'sankaku',m:3, ev:'疲れを感じた',               tx:'疲れているが、チャレンジをやめる気にはならない。葛藤しながらも発見を積み重ねている。変化の途中にいる感覚がある。'},
+    {t:'maru',   m:4, ev:'新しい出会いがあった',       tx:'チャレンジが縁をつないでくれた。発見と変化を感じる。葛藤もあるが、なんとかなりそうな気がしてきた。'},
+    {t:'maru',   m:5, ev:'手ごたえを感じた',           tx:'チャレンジの手ごたえを感じた1日。変化が見えてきた。発見が嬉しい。葛藤は減り、自然に動けるようになっている。'},
+
+    // ── 終盤（21〜30日）：自然体・自分らしさ・つながり ──
+    {t:'maru',   m:5, ev:'自然に行動できた',           tx:'今日は自然にできた。自分らしい動き方がわかってきた気がする。つながりを感じながら動けた。充実している。'},
+    {t:'maru',   m:4, ev:'誰かの役に立てた',           tx:'自分らしいやり方で誰かに貢献できた。つながりが力になることを実感。自然体で動けている。充実感がある。'},
+    {t:'maru',   m:5, ev:'迷わず決断できた',           tx:'自然に決断できた。自分らしい判断ができた気がする。つながりの中で生きている実感がある。充実した1日。'},
+    {t:'maru',   m:4, ev:'仲間と話した',               tx:'つながりを大切にしながら自分らしく話せた。自然体でいられる時間が増えた。充実している。'},
+    {t:'maru',   m:5, ev:'新しい挑戦を始めた',         tx:'自然に次の一歩が踏み出せた。自分らしさを信じて動けている。つながりが背中を押してくれた。充実感が続いている。'},
+    {t:'maru',   m:4, ev:'穏やかな1日だった',          tx:'自然体で過ごせた。自分らしい1日だった。つながりの中に安心感がある。充実していて、焦りがない。'},
+    {t:'maru',   m:5, ev:'感謝を伝えられた',           tx:'つながりに感謝できた。自分らしく伝えられた気がする。自然に行動できている。充実した毎日になってきた。'},
+    {t:'maru',   m:4, ev:'振り返りが深まった',         tx:'自然と振り返りができている。自分らしさを見つめる習慣がついた。つながりの中で成長している実感がある。充実した時間だった。'},
+    {t:'maru',   m:5, ev:'自信を感じた',               tx:'自分らしく動けた1日。自然体で、つながりを感じながら、充実している。この感覚を大切にしていきたい。'},
+    {t:'maru',   m:5, ev:'100日行を続けられている',    tx:'自然に続けられている。自分らしい歩み方がわかってきた。つながりの中で充実した毎日を送れている。これが変容なのかもしれない。'},
+  ];
+  return data.map((d, i) => {
+    const date = new Date(base);
+    date.setDate(date.getDate() - (29 - i));
+    return { id: -(i+1), date: date.toISOString(), day: i+1, tegotae: d.t, mood: d.m, events: d.ev, text: d.tx };
+  });
+})();
+
+function toggleDemo() {
+  demoMode = !demoMode;
+  const btn = document.getElementById('demoBtn');
+  if (demoMode) {
+    btn.textContent = '✕ デモを解除';
+    btn.style.borderColor = 'var(--accent)';
+    btn.style.color = 'var(--accent)';
+    renderGraphWithData(DEMO_ENTRIES, currentGraphRange);
+  } else {
+    btn.textContent = '📊 デモデータで確認';
+    btn.style.borderColor = 'var(--border)';
+    btn.style.color = 'var(--text3)';
+    renderGraph(currentGraphRange);
+  }
+}
+
+function renderGraphWithData(sourceEntries, days) {
+  const statsEl = document.getElementById('graphStats');
+  const canvas = document.getElementById('vzChart');
+  if (vzChart) { vzChart.destroy(); vzChart = null; }
+
+  const now = new Date();
+  const cutoff = new Date(now);
+  cutoff.setDate(cutoff.getDate() - days + 1);
+  cutoff.setHours(0,0,0,0);
+  const filtered = sourceEntries.filter(e => new Date(e.date) >= cutoff);
+  if (!filtered.length) { renderGraph(days); return; }
+
+  window._graphEntries = filtered;
+  const labels = [], tegotae = [], mood = [];
+  filtered.forEach(e => {
+    const d = new Date(e.date);
+    labels.push((d.getMonth()+1)+'/'+(d.getDate()));
+    tegotae.push(e.tegotae ? TEGOTAE_SCORE[e.tegotae] : null);
+    mood.push(e.mood ? +e.mood : null);
+  });
+
+  canvas.style.display = 'block';
+  vzChart = new Chart(canvas, {
+    type: 'line',
+    data: {
+      labels,
+      datasets: [
+        { label:'手ごたえ', data:tegotae, borderColor:'#7c5cbf', backgroundColor:'rgba(124,92,191,0.12)', fill:true, tension:0.45, pointBackgroundColor:'#7c5cbf', pointBorderColor:'#fff', pointBorderWidth:2, pointRadius:5, pointHoverRadius:7, spanGaps:true, yAxisID:'y' },
+        { label:'気分スコア', data:mood, borderColor:'#ff7eb3', backgroundColor:'rgba(255,126,179,0.08)', fill:true, tension:0.45, pointBackgroundColor:'#ff7eb3', pointBorderColor:'#fff', pointBorderWidth:2, pointRadius:5, pointHoverRadius:7, spanGaps:true, yAxisID:'y' }
+      ]
+    },
+    options: {
+      onClick: (evt, items) => { if (!items.length || !window._graphEntries) return; const e = window._graphEntries[items[0].index]; if (e && e.id > 0) openModal(e.id); },
+      responsive:true, maintainAspectRatio:false,
+      interaction:{ mode:'index', intersect:false },
+      plugins:{
+        legend:{ display:false },
+        tooltip:{
+          backgroundColor:'rgba(45,37,64,0.9)', titleColor:'#fff', bodyColor:'rgba(255,255,255,0.8)', padding:10, cornerRadius:10,
+          callbacks:{
+            title: items => { const e = window._graphEntries[items[0]?.dataIndex]; if(!e) return items[0]?.label||''; return items[0].label + (e.events?'　'+e.events.slice(0,20):''); },
+            label: ctx => { const v=ctx.raw; if(v===null) return ctx.dataset.label+': —'; if(ctx.dataset.label==='手ごたえ'){const m={3:'○ よかった',2:'△ まあまあ',1:'× うまくいかず'}; return '手ごたえ: '+(m[v]||v);} const ml={1:'イマイチ',2:'低め',3:'普通',4:'良好',5:'最高'}; return '気分: '+v+' ('+(ml[v]||'')+')'; }
+          }
+        }
+      },
+      scales:{
+        x:{ grid:{color:'rgba(160,149,184,0.12)'}, ticks:{font:{size:11,family:"'Noto Sans JP',sans-serif"},color:'#a095b8',maxRotation:0,autoSkip:true,maxTicksLimit:10} },
+        y:{ min:0.5, max:5.5, grid:{color:'rgba(160,149,184,0.12)'}, ticks:{stepSize:1,font:{size:11,family:"'Noto Sans JP',sans-serif"},color:'#a095b8', callback:v=>{const m={1:'低',2:'やや低',3:'普通',4:'良好',5:'最高'};return m[v]||'';}} }
+      }
+    }
+  });
+
+  const validT = tegotae.filter(v=>v!==null), validM = mood.filter(v=>v!==null);
+  const avgT = validT.length ? validT.reduce((a,b)=>a+b,0)/validT.length : null;
+  const avgM = validM.length ? validM.reduce((a,b)=>a+b,0)/validM.length : null;
+  const tegotaeDisp = avgT ? (['','×','△','○'][Math.round(avgT)]) : '—';
+  statsEl.innerHTML = `
+    <div class="graph-stat"><div class="graph-stat-label">平均手ごたえ</div><div class="graph-stat-val" style="color:#7c5cbf;">${tegotaeDisp}</div><div class="graph-stat-sub">${avgT?avgT.toFixed(1)+' / 3.0':'データなし'}</div></div>
+    <div class="graph-stat"><div class="graph-stat-label">平均気分</div><div class="graph-stat-val" style="color:#ff7eb3;">${moodLabel(avgM)}</div><div class="graph-stat-sub">${avgM?avgM.toFixed(1)+' / 5.0':'データなし'}</div></div>
+    <div class="graph-stat"><div class="graph-stat-label">連続記録</div><div class="graph-stat-val">${filtered.length}</div><div class="graph-stat-sub">日分（デモ）</div></div>
+  `;
+}
+</script>
+</body>
+</html>
